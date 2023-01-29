@@ -1,2 +1,3 @@
 # Monobank
-Swift package for Monobank public API
+
+A description of this package.
