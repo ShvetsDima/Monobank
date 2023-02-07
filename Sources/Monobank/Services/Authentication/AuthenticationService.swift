@@ -15,15 +15,15 @@ final class AuthenticationService: AuthenticationUseCase {
         self.context = context
     }
     
-	var apiToken: String? {
-		context.keychain.value(for: KeychainService.Key.token.rawValue)
-	}
+    var apiToken: String? {
+        context.keychain.value(for: KeychainService.Key.token.rawValue)
+    }
     
     func authenticateWith(_ apiToken: String) {
-		context.keychain.set(value: apiToken, for: KeychainService.Key.token.rawValue)
+        context.keychain.set(value: apiToken, for: KeychainService.Key.token.rawValue)
     }
-	
-	func logout() {
-		context.keychain.clear()
-	}
+    
+    func logout() throws {
+        context.keychain.clear()
+    }
 }

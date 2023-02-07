@@ -6,19 +6,28 @@
 //
 
 import Foundation
-import Combine
-import Moya
 
 final class ClientInfoService: ClientInfoUseCase {
-
+    
     private let provider: Provider<ClientInfoAPI>
+    private let cache: CacheProvider<String, ClientInfo>
     
     init(context: Context) {
         self.provider = context.network.provider()
+        self.cache = context.cache.authorizedProvider()
     }
     
-//    func fetchClientInfo() async -> Result<ClientInfo, MonobankError> {
-// 
-//    }
-    
+    var clientInfo: ClientInfo {
+        get async throws {
+            if let cache = cache.value(for: Cache.Key.clientInfo.rawValue) { return cache }
+            
+            let clientInfo = try await provider
+                .request(target: .personalInfo)
+                .map(ClientInfo.self)
+            
+            cache.set(value: clientInfo, for: Cache.Key.clientInfo.rawValue)
+
+            return clientInfo
+        }
+    }
 }

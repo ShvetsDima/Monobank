@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol StatementUseCase: AutoUseCaseProvider {
-    func fetchStatements(for account: Account, from: Date, to: Date) async -> Result<[Statement], MonobankError>
+    func statements(for account: Account, from: Date, to: Date) async throws -> [Statement]
 }

@@ -11,7 +11,7 @@ import Moya
 final class LogPlugin: PluginType {
     
     func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
-        #if DEBUG
+#if DEBUG
         switch result {
         case .success(let body):
             print("Response: ")
@@ -19,11 +19,11 @@ final class LogPlugin: PluginType {
                 print(json)
             } else {
                 let response = String(data: body.data, encoding: .utf8)
-				print(response as Any)
+                print(response as Any)
             }
         case .failure( _):
             break
         }
-        #endif
+#endif
     }
 }

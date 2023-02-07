@@ -6,21 +6,30 @@
 //
 
 import Foundation
-import Combine
-import Moya
 
 final class StatementService: StatementUseCase {
     
     private let provider: Provider<StatementAPI>
+    private let cache: CacheProvider<String, [Statement]>
     
     init(context: Context) {
         self.provider = context.network.provider()
+        self.cache = context.cache.authorizedProvider()
     }
     
-    func fetchStatements(for account: Account, from: Date, to: Date) async -> Result<[Statement], MonobankError> {
-        return .success([])
+    func statements(for account: Account, from: Date, to: Date) async throws -> [Statement] {
+        if let cache = cache.value(for: Cache.Key.statement.rawValue) { return cache }
+
+        let params = StatementParams(account: account.id, from: from, to: to)
+        
+        let statements = try await provider
+            .request(target: .statement(params))
+            .map([Statement].self)
+        
+        cache.set(value: statements, for: Cache.Key.statement.rawValue)
+
+        return statements
     }
-    
 }
 
 

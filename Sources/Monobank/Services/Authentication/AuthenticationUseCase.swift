@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol AuthenticationUseCase: AutoUseCaseProvider {
-	var apiToken: String? { get }
+    var apiToken: String? { get }
     func authenticateWith(_ apiToken: String)
-	func logout()
+    func logout() throws
 }

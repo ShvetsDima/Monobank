@@ -9,11 +9,11 @@ import Foundation
 import Moya
 
 final class AuthPlugin: PluginType {
-	
-	private static let authHeader = "X-Token"
-	
+    
+    private static let authHeader = "X-Token"
+    
     private let keychain: KeychainStorage
-        
+    
     init(_ keychain: KeychainStorage) {
         self.keychain = keychain
     }
@@ -21,8 +21,8 @@ final class AuthPlugin: PluginType {
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
         guard target.needAuth else { return request }
         var updatedRequest = request
-		let token = keychain.value(for: KeychainService.Key.token.rawValue)
-		updatedRequest.setValue(token, forHTTPHeaderField: AuthPlugin.authHeader)
+        let token = keychain.value(for: KeychainService.Key.token.rawValue)
+        updatedRequest.setValue(token, forHTTPHeaderField: AuthPlugin.authHeader)
         return updatedRequest
     }
 }

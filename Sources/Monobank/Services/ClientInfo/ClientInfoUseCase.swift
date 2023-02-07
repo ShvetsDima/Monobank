@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol ClientInfoUseCase: AutoUseCaseProvider {
-    //func fetchClientInfo() async -> Result<ClientInfo, MonobankError>
+    var clientInfo: ClientInfo { get async throws }
 }

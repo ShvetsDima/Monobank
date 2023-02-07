@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol CurrencyUseCase: AutoUseCaseProvider {
-	func getCurrencyRates() async throws -> [CurrencyRate]
+    var сurrencyRates: [CurrencyRate] { get async throws }
 }
 
