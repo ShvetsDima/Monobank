@@ -4,25 +4,26 @@
 import PackageDescription
 
 let package = Package(
-    name: "Monobank",
-    products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "Monobank",
-            targets: ["Monobank"]),
-    ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "Monobank",
-            dependencies: []),
-        .testTarget(
-            name: "MonobankTests",
-            dependencies: ["Monobank"]),
-    ]
+	name: "Monobank",
+	platforms: [
+		.macOS(.v10_15),
+		.iOS(.v13),
+		.tvOS(.v13)
+	],
+	products: [
+		.library(name: "Monobank", targets: ["Monobank"]),
+	],
+	dependencies: [
+		.package(url: "https://github.com/Moya/Moya", from: "15.0.3"),
+		.package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2"),
+		.package(url: "https://github.com/ShvetsDima/SourceryPlugin", branch: "main"),
+		.package(url: "https://github.com/hyperoslo/Cache", from: "6.0.0")
+	],
+	targets: [
+		.target(name: "Monobank",
+				dependencies: ["KeychainAccess", .product(name: "Moya", package: "Moya"), "Cache"],
+				exclude: ["Templates/AutoUseCaseProvider.stencil"],
+				plugins: [.plugin(name: "SourceryPlugin", package: "SourceryPlugin")]),
+		.testTarget(name: "MonobankTests", dependencies: ["Monobank"])
+	]
 )
