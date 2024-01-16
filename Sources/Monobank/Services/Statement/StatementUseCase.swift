@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol StatementUseCase: AutoUseCaseProvider {
+public protocol StatementUseCase {
     func statements(for account: Account, from: Date, to: Date) async throws -> [Statement]
 }

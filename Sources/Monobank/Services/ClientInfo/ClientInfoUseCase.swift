@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol ClientInfoUseCase: AutoUseCaseProvider {
+public protocol ClientInfoUseCase {
     var clientInfo: ClientInfo { get async throws }
 }

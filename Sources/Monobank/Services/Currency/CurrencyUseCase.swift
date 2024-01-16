@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol CurrencyUseCase: AutoUseCaseProvider {
+public protocol CurrencyUseCase {
     var сurrencyRates: [CurrencyRate] { get async throws }
 }
 
